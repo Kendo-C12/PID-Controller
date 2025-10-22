@@ -1,0 +1,52 @@
+PID
+|--- P : proportional = set point (SP) - measured process process variable (PV)
+|    |                  ระยะห่างระหว่างจุดที่อยู่กับจุดที่ต้องการ
+|    |                   when P > 0 คือต้องเลื่อน  "เข้าไปหา"  จุดที่ต้องการ
+|    |                   when P < 0 คือต้องเลื่อน "ย้อนกลับไป" จุดที่ต้องการ 
+|    |
+|    |--- Kp * e(t) -> MAIN CHANGE
+|            |
+|            |--- e(t) = error term  ->  SP - PV
+|                  ระยะห่างระหว่างจุดที่อยู่กับจุดที่ต้องการ
+|                   "ต้องเคลื่อนที่อีกเท่าไร" 
+|    
+|
+|--- I
+|    |--- Ki * ∫ e(t) dt
+|               |--- SUM(e(t) * dt) = error term * delta time
+|                       ผลรวมของ error term คูณด้วยช่วงเวลา
+|                "อันไว้ในกรณีที่ Kp มีค่าน้อยกว่าจะทำให้ถึง set point ได้ (Backup plan)"
+|
+|--- D
+|    |--- Kd * de(t)/dt
+|            |--- de(t)/dt = change of error term over change of time
+|                   ความเร็วในการเปลี่ยนแปลงของ error term ต่อเวลา
+|                  "เมื่อเราต้องการความเร็วที่มากขึ้น เราเลยเพิ่ม Kp , Ki ทำให้ค่ามันเกินและมีการย้อนกลับทำให้
+|                   กราฟมีลักษณะ ที่แกว่ง Kd จะทำให้การแกว่งนั้นน้อยลง"
+|
+|
+|
+|--- Description
+|    |--- PID controller is a control loop mechanism employing feedback that is widely used in industrial control
+|
+|
+|--- Control signal = P + I + D
+|       |               |--- Kp * e(t) + Ki * ∫ e(t) dt + Kd * de(t)/dt
+|       |
+|       |--- process_variable += (control signal - (PV - SP) * 0.1) * dt
+|                  or         += control signal * dt
+|
+|
+|
+|
+|--- Tuning
+|     |--- The process of adjusting the controller parameters (Kp, Ki, Kd) to achieve optimal performance
+|
+|
+|--- Overdamped respone -> ช้าเกินไป (Kp และ Ki น้อยไป)
+|
+|--- Underdamped respone -> เร็วเกินไปจะมันแกว่งหรือเลยค่าที่ต้องการ (Kp และ Ki มากไป)
+|
+|--- Critically damped respone -> perfect (มี Kd)
+|
+|
